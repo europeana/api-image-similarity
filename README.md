@@ -1,2 +1,2 @@
-# api-image-similarity
+# image-similarity-api
 Image similarity search API
