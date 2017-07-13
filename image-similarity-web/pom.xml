@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>image-similarity-web</artifactId>
+	<name>Image Similarity - WEB API </name>
+	<packaging>war</packaging>
+	<description>The implementation of the &quot;Image Similarity&quot; service</description>
+
+	<parent>
+		<artifactId>image-similarity-api</artifactId>
+		<version>${version.imageSimilarityApi}</version>
+		<relativePath>../pom.xml</relativePath>
+		<groupId>eu.europeana.similarity</groupId>
+	</parent>
+
+	<repositories>
+		<!-- jetty repos -->
+		<repository>
+			<id>repo1.maven.org</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+
+		<repository>
+			<id>jcenter-release</id>
+			<name>jcenter</name>
+			<url>http://oss.jfrog.org/artifactory/oss-release-local/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<!-- entity projects -->
+
+		<dependency>
+			<groupId>eu.europeana.similarity</groupId>
+			<artifactId>image-similarity-common</artifactId>
+			<version>${version.imageSimilarityApi}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>eu.europeana.similarity</groupId>
+			<artifactId>image-similarity-solr</artifactId>
+			<version>${version.imageSimilarityApi}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>eu.europeana.api.commons</groupId>
+			<artifactId>commons-web</artifactId>
+			<version>${version.commonsApi}</version>
+		</dependency>
+
+		<!-- spring -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.0-m01</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.codehaus.jackson</groupId> <artifactId>jackson-xc</artifactId> 
+			<version>${version.codehausJackson}</version> </dependency> -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<!-- <version>2.2.1</version> -->
+			<version>${version.jackson}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+			<version>${version.jackson}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${version.servletJstl}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>${version.spring}</version>
+
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.codehaus.jettison</groupId> <artifactId>jettison</artifactId> 
+			<version>1.1</version> </dependency> -->
+
+		<!-- test dependencies -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test</artifactId> 
+			<version>${version.spring}</version> <scope>test</scope> </dependency> -->
+
+
+	</dependencies>
+
+	<!-- configure source and output locations -->
+
+	<!-- <properties> <version.slf4j>1.7.5</version.slf4j> </properties> -->
+
+</project>

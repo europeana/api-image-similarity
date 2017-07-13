@@ -1,0 +1,32 @@
+# 
+#  Copyright 2007-2012 The Europeana Foundation
+#
+#  Licenced under the EUPL, Version 1.1 (the "Licence") and subsequent versions as approved 
+#  by the European Commission;
+#  You may not use this work except in compliance with the Licence.
+#  
+#  You may obtain a copy of the Licence at:
+#  http://joinup.ec.europa.eu/software/page/eupl
+#
+#  Unless required by applicable law or agreed to in writing, software distributed under 
+#  the Licence is distributed on an "AS IS" basis, without warranties or conditions of 
+#  any kind, either express or implied.
+#  See the Licence for the specific language governing permissions and limitations under 
+#  the Licence.
+#
+
+#common settings
+#string value indicating if the application runs in "production", "test", "development" environment 
+image.similarity.environment=development
+
+#used only in production environment
+
+# solr connection settings
+# core search (default) 
+solr.image.similarity.url = http://localhost:8983/solr/entity
+
+solr.image.similarity.timeout = 60000
+solr.image.similarity.facetLimit=750
+
+#placeholder to store generation timestamp
+image.similarity.properties.timestamp=-1
