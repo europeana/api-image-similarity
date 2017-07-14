@@ -37,10 +37,7 @@
    <!--  
 	<beans:import resource="entity-definitions-context.xml"/>
 	 -->
-<!-- 
-	<beans:import resource="entity-mongo-context.xml"/>
--->
-	<beans:import resource="entity-solr-context.xml"/>
+	<beans:import resource="image-similarity-solr-context.xml"/>
 	
     
    	<!--  ApiKeyService -->
@@ -55,7 +52,7 @@
 	
     
     <!--  java api bean -->
-	<beans:bean id="entityService" class="eu.europeana.entity.web.service.impl.EntityServiceImpl">
+	<beans:bean id="imageSimilarityService" class="eu.europeana.image.similarity.web.service.impl.ImageSimilarityServiceImpl">
     	<!--  
     	<beans:property name="configuration" ref="configuration"/>
     	-->
@@ -67,8 +64,9 @@
     <!-- configurable error messages -->
 <!--     <beans:bean id="errorMessageController" class="eu.europeana.entity.web.controller.ErrorMessageController"> -->
 <!--     </beans:bean> -->
-    <beans:bean id="i18nService" class="eu.europeana.entity.config.i18n.I18nServiceImpl">
-    	<beans:property name="messageSource" ref="entity_i18n_messageSource"/>
+    
+    <beans:bean id="i18nService" class="eu.europeana.api.commons.config.i18n.I18nServiceImpl">
+    	<beans:property name="messageSource" ref="image_similarity_i18n_messageSource"/>
     </beans:bean>
     	
    

@@ -7,10 +7,10 @@ import eu.europeana.image.similarity.web.service.ImageSimilarityService;
 
 public class ImageSimilarityServiceImpl implements ImageSimilarityService {
 
-	public final String BASE_URL_DATA = "http://data.europeana.eu/";  
+//	public final String BASE_URL_DATA = "http://data.europeana.eu/";  
 	
 	@Resource 
-	SolrImageSimilarityService solrEntityService;
+	SolrImageSimilarityService imageSimilaritySolrService;
 	
 //	@Override
 //	public Entity retrieveByUrl(String type, String namespace, String identifier) throws HttpException{

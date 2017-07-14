@@ -36,7 +36,7 @@
 	
 	<!-- SERVICES -->
 	<!-- OVERRIDE FOR TESTING -->
-	<bean name="image_similarity_solr_service" class="eu.europeana.image.similarity.solr.service.impl.SolrImageSimilarityServiceImpl"
+	<bean name="imageSimilaritySolrService" class="eu.europeana.image.similarity.solr.service.impl.SolrImageSimilarityServiceImpl"
 		p:solrClient-ref="image_similarity_solr_server"
 	/>
 	

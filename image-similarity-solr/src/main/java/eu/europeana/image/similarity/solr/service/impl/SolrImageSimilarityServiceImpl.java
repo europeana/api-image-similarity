@@ -111,12 +111,17 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 		return solrQuery;
 	}
 	
-	protected <T extends ImageSimilarity> ResultSet<T> buildResultSet(QueryResponse rsp, Class<T> concreteClass) {
+	protected <T extends ImageSimilarity> ResultSet<T> buildResultSet(QueryResponse rsp, Class<T> concreteClass) throws ImageSimilarityRetrievalException {
 
 		ResultSet<T> resultSet = new ResultSet<>();
 
 		//quickfix for https://github.com/gsergiu/liresolr/issues/4
 		NamedList<Object> responseMap = rsp.getResponse();
+
+		Object error = responseMap.get("Error");
+		if(error != null)
+			throw new ImageSimilarityRetrievalException((String)error);
+		
 		SolrDocumentList docList = new SolrDocumentList();
 	    List<Object> docs = (List<Object>) responseMap.get("docs");
 	    SolrDocument solrDoc;
