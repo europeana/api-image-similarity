@@ -2,6 +2,7 @@ package eu.europeana.image.similarity.web.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.PathParam;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +40,8 @@ public class SearchController extends BaseRest {
 	@RequestMapping(value = { "/similarity/{datasetId}/{localId}", "/similarity/{datasetId}/{localId}.json" }, method = RequestMethod.GET, produces = {
 			HttpHeaders.CONTENT_TYPE_JSON_UTF8, HttpHeaders.CONTENT_TYPE_JSONLD_UTF8 })
 	public ResponseEntity<String> searchById(
-			@RequestParam(value = ImageSimilarityConstants.PARAM_DATASET_ID) String datasetId,
-			@RequestParam(value = ImageSimilarityConstants.PARAM_LOCAL_ID) String localId,
+			@PathParam(value = ImageSimilarityConstants.PARAM_DATASET_ID) String datasetId,
+			@PathParam(value = ImageSimilarityConstants.PARAM_LOCAL_ID) String localId,
 			@RequestParam(value = ImageSimilarityConstants.PARAM_WSKEY) String wskey,
 			@RequestParam(value = ImageSimilarityConstants.PARAM_FEATURE) String feature,
 //			@RequestParam(value = ImageSimilarityConstants.PARAM_ALG) String algorithm,
