@@ -1,7 +1,6 @@
 package eu.europeana.image.similarity.solr.service.impl;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.beans.DocumentObjectBinder;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -25,7 +23,7 @@ import eu.europeana.image.similarity.definitions.model.search.result.ResultSet;
 import eu.europeana.image.similarity.definitions.model.vocabulary.SolrConstants;
 import eu.europeana.image.similarity.definitions.model.vocabulary.SolrFields;
 import eu.europeana.image.similarity.solr.exception.ImageSimilarityRetrievalException;
-import eu.europeana.image.similarity.solr.model.impl.SolrImageSimilarityImpl;
+import eu.europeana.image.similarity.solr.exception.ImageSimilarityRetrievalRuntimeException;
 import eu.europeana.image.similarity.solr.service.SolrImageSimilarityService;
 
 @SuppressWarnings("deprecation")
@@ -45,7 +43,7 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 	}
 
 	public ResultSet<? extends ImageSimilarity> search(Query searchQuery)
-			throws ImageSimilarityRetrievalException {
+			throws ImageSimilarityRetrievalException, ImageSimilarityRetrievalRuntimeException {
 		getLogger().trace("Search by query:" + searchQuery);
 
 		ResultSet<? extends ImageSimilarity> res = null;
@@ -58,9 +56,15 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 		/**
 		 * Query the server
 		 */
+		String className = null;
 		try {
 			QueryResponse rsp = solrClient.query(query);
-			res = buildResultSet(rsp, SolrImageSimilarityImpl.class);
+			//TODO: add to properties
+			className = "eu.europeana.image.similarity.web.model.WebImageSimilarityImpl";
+			@SuppressWarnings("unchecked")
+			Class<? extends ImageSimilarity> similarityBeanClass = (Class<? extends ImageSimilarity>) Class.forName(className);
+			
+			res = buildResultSet(rsp, similarityBeanClass);
 		} catch (SolrServerException e) {
 			throw new ImageSimilarityRetrievalException(
 					"Unexpected exception occured when retrieving image similarities by query: " + query.toString(),
@@ -68,6 +72,8 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 		} catch (IOException e) {
 			throw new ImageSimilarityRetrievalException(
 					"IO exception occured when trying to access the solr server:" + solrClient.toString() , e);
+		} catch (ClassNotFoundException e) {
+			throw new ImageSimilarityRetrievalRuntimeException("Cannot access image similarity bean class:" + className, e);
 		}
 
 		return res;
@@ -111,6 +117,7 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 		return solrQuery;
 	}
 	
+	@SuppressWarnings("unchecked")
 	protected <T extends ImageSimilarity> ResultSet<T> buildResultSet(QueryResponse rsp, Class<T> concreteClass) throws ImageSimilarityRetrievalException {
 
 		ResultSet<T> resultSet = new ResultSet<>();

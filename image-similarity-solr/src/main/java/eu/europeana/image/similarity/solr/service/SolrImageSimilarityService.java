@@ -4,6 +4,7 @@ import eu.europeana.image.similarity.definitions.model.ImageSimilarity;
 import eu.europeana.image.similarity.definitions.model.search.Query;
 import eu.europeana.image.similarity.definitions.model.search.result.ResultSet;
 import eu.europeana.image.similarity.solr.exception.ImageSimilarityRetrievalException;
+import eu.europeana.image.similarity.solr.exception.ImageSimilarityRetrievalRuntimeException;
 
 @SuppressWarnings("deprecation")
 public interface SolrImageSimilarityService {
@@ -15,7 +16,7 @@ public interface SolrImageSimilarityService {
 	 * @return the set of ImageSimilarites that match the given search criteria
 	 * @throws EntityRetrievalException 
 	 */
-	public ResultSet<? extends ImageSimilarity> search(Query searchQuery) throws ImageSimilarityRetrievalException;
+	public ResultSet<? extends ImageSimilarity> search(Query searchQuery) throws ImageSimilarityRetrievalException, ImageSimilarityRetrievalRuntimeException;
 
 	public Query buildSearchQuery(String recordId, String feature, int start, int rows);
 

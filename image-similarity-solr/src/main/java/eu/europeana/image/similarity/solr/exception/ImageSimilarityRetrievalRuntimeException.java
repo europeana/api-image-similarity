@@ -1,7 +1,7 @@
 package eu.europeana.image.similarity.solr.exception;
 
 
-public class ImageSimilarityRetrievalRuntimeException extends Exception {
+public class ImageSimilarityRetrievalRuntimeException extends RuntimeException {
 
 	/**
 	 * 
