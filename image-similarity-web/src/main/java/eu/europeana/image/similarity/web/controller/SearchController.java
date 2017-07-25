@@ -87,7 +87,6 @@ public class SearchController extends BaseRest {
 			// build response
 			MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>(5);
 			headers.add(HttpHeaders.VARY, HttpHeaders.ACCEPT);
-//			headers.add(HttpHeaders.LINK, HttpHeaders.VALUE_LDP_CONTAINER);
 			headers.add(HttpHeaders.ALLOW, HttpHeaders.ALLOW_GET);
 
 			ResponseEntity<String> response = new ResponseEntity<String>(json, headers, HttpStatus.OK);
