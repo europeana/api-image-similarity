@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eu.europeana.api.common.config.swagger.SwaggerSelect;
-import eu.europeana.api.commons.config.i18n.I18nConstants;
 import eu.europeana.api.commons.web.exception.HttpException;
 import eu.europeana.api.commons.web.exception.InternalServerException;
 import eu.europeana.api.commons.web.http.HttpHeaders;
 import eu.europeana.image.similarity.definitions.model.ImageSimilarity;
 import eu.europeana.image.similarity.definitions.model.search.Query;
 import eu.europeana.image.similarity.definitions.model.search.result.ResultSet;
-import eu.europeana.image.similarity.solr.service.SolrImageSimilarityService;
 import eu.europeana.image.similarity.web.model.SimilaritySearchResults;
+import eu.europeana.image.similarity.web.service.ImageSimilarityService;
 import eu.europeana.image.similarity.web.vocabulary.ImageSimilarityConstants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,8 +34,8 @@ import io.swagger.annotations.ApiOperation;
 public class SearchController extends BaseRest {
 
 	@Resource
-	SolrImageSimilarityService similarityService;
-
+	ImageSimilarityService imageSimilarityService;
+	
 	@SuppressWarnings("deprecation")
 	@ApiOperation(value = "Search images by europeana record id. Feature must be one of: ph (PHOG), ce (CEDD), cl (ColorLayout), sc (ScalableColor), jc (JCD), oh (OpponentHistogram), eh (EdgeHistogram)"
 	, nickname = "searchByRecordId", response = java.lang.Void.class)
@@ -65,14 +64,7 @@ public class SearchController extends BaseRest {
 			// perform search
 			String recordId = "/"+datasetId+"/"+localId;
 			
-			
-			
-			Query searchQuery = similarityService.buildSearchQuery(recordId, feature, (page - 1) * pageSize, pageSize);
-			ResultSet<? extends ImageSimilarity> results = similarityService.search(searchQuery);
-			
-			if(results.isEmpty())
-				throw new HttpException("no results found when searching for: " + recordId, 
-						I18nConstants.RESOURCE_NOT_FOUND, new String[]{"recordId: " +recordId }, HttpStatus.NOT_FOUND, null);
+			ResultSet<? extends ImageSimilarity> results = imageSimilarityService.searchByRecordId(recordId, feature, page, pageSize);
 			
 			SimilaritySearchResults<? extends ImageSimilarity> apiResponse = new SimilaritySearchResults<>();
 			apiResponse.setItems(results.getResults());

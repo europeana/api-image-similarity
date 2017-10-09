@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import eu.europeana.api.commons.config.i18n.I18nService;
 import eu.europeana.api.commons.web.controller.exception.AbstractExceptionHandlingController;
 import eu.europeana.api.commons.web.model.ApiResponse;
+import eu.europeana.api.commons.web.model.ErrorApiResponse;
 
 /**
- * TODO move to api-common
  * 
  * @author GordeaS
  *
@@ -30,8 +30,7 @@ public class GlobalExceptionHandling extends AbstractExceptionHandlingController
 
 	@Override
 	public ApiResponse buildErrorResponse(String errorMessage, String action, String apiKey) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ErrorApiResponse(apiKey, action, errorMessage);	
 	}
 
 }
