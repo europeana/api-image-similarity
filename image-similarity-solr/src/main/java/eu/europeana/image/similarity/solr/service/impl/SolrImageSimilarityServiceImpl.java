@@ -64,7 +64,7 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 			@SuppressWarnings("unchecked")
 			Class<? extends ImageSimilarity> similarityBeanClass = (Class<? extends ImageSimilarity>) Class.forName(className);
 			
-			res = buildResultSet(rsp, similarityBeanClass);
+			res = buildResultSet(rsp, similarityBeanClass, searchQuery);
 		} catch (SolrServerException e) {
 			throw new ImageSimilarityRetrievalException(
 					"Unexpected exception occured when retrieving image similarities by query: " + query.toString(),
@@ -88,10 +88,13 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 			solrQuery.setParam(SolrFields.ID, searchQuery.getQuery());
 		else
 			solrQuery.setQuery(searchQuery.getQuery());
-
-		solrQuery.setRows(searchQuery.getRows());
-		solrQuery.setStart(searchQuery.getStart());
-
+		
+		//need to compensate missing start param https://github.com/gsergiu/liresolr/issues/7 
+		//solrQuery.setRows(searchQuery.getRows());
+		//solrQuery.setStart(searchQuery.getStart());
+		//#7 need to retrieve from solrlire items from all previous pages + current one  
+		solrQuery.setRows(searchQuery.getStart() + searchQuery.getRows());
+		
 		if (searchQuery.getFilters() != null)
 			solrQuery.addFilterQuery(searchQuery.getFilters());
 
@@ -118,7 +121,7 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected <T extends ImageSimilarity> ResultSet<T> buildResultSet(QueryResponse rsp, Class<T> concreteClass) throws ImageSimilarityRetrievalException {
+	protected <T extends ImageSimilarity> ResultSet<T> buildResultSet(QueryResponse rsp, Class<T> concreteClass, Query searchQuery) throws ImageSimilarityRetrievalException {
 
 		ResultSet<T> resultSet = new ResultSet<>();
 
@@ -132,7 +135,12 @@ public class SolrImageSimilarityServiceImpl implements SolrImageSimilarityServic
 		SolrDocumentList docList = new SolrDocumentList();
 	    List<Object> docs = (List<Object>) responseMap.get("docs");
 	    SolrDocument solrDoc;
+	    int counter = 0;
 	    for (Object doc : docs) {
+	    	//need to compensate missing start param https://github.com/gsergiu/liresolr/issues/7 
+			if(counter++ < searchQuery.getStart())
+				continue;//skip items that do not belong in the current page 
+			
 	    	solrDoc = new SolrDocument((Map<String, Object>) doc);
 	    	docList.add(solrDoc);
 		}
