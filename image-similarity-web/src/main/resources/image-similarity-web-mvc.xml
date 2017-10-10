@@ -25,8 +25,6 @@
 					<list>
 						<value>application/json;charset=utf-8</value>
 						<value>application/ld+json;charset=utf-8</value>
-						<value>application/json</value>
-						<value>application/ld+json</value>
 						<value>text/plain;charset=utf-8</value>					
 				 	</list>
 				 </property>
@@ -62,11 +60,11 @@
 	</bean>
 
 	<!-- the json view -->
-	<bean id="annotation_mvc_views_jaxbAnnotationBinder" class="com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" />
-	<bean id="annotation_mvc_views_jsonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<bean id="image_similarity_mvc_views_jaxbAnnotationBinder" class="com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector" />
+	<bean id="image_similarity_mvc_views_jsonObjectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
 	
-	<bean id="annotation_mvc_views_json"
+	<bean id="image_similarity_mvc_views_json"
 		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"
-		p:objectMapper="#{annotation_mvc_views_jsonObjectMapper.setAnnotationIntrospector(annotation_mvc_views_jaxbAnnotationBinder)}" />
+		p:objectMapper="#{image_similarity_mvc_views_jsonObjectMapper.setAnnotationIntrospector(image_similarity_mvc_views_jaxbAnnotationBinder)}" />
 
 </beans>
