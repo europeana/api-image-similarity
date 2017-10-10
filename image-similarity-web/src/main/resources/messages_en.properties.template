@@ -1,0 +1,14 @@
+# 401 (Unauthorized)
+#error.entity_no_application_for_apikey=No client application registered for the given apiKey: {0}
+error.invalid_apikey=Invalid apiKey: {0}
+error.empty_apikey=Empty apiKey!
+
+#400
+error.empty_param_mandatory
+error.invalid_param_value=Invalid request parameter value. Param: {0} Value: {1} 
+
+# 404 (Not Found - client must not issue the same call again)
+error.not_found=No results found for requested resource.  RequestParam: {0} Value: {1}
+
+# 500 (Internal Server Error - runtime exceptions; might be temporarily, infrastructure problems)
+error.server_unexpected_error=An unexpected server exception occurred!
