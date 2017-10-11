@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import eu.europeana.api.commons.config.i18n.I18nService;
 import eu.europeana.api.commons.web.controller.exception.AbstractExceptionHandlingController;
-import eu.europeana.api.commons.web.model.ApiResponse;
-import eu.europeana.api.commons.web.model.ErrorApiResponse;
 
 /**
  * 
@@ -26,11 +24,6 @@ public class GlobalExceptionHandling extends AbstractExceptionHandlingController
 	
 	protected I18nService getI18nService() {
 		return i18nService;
-	}
-
-	@Override
-	public ApiResponse buildErrorResponse(String errorMessage, String action, String apiKey) {
-		return new ErrorApiResponse(apiKey, action, errorMessage);	
 	}
 
 }
